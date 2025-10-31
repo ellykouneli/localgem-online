@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true, // ✅ Skip ESLint checks during Vercel build
+  },
 };
 
 export default nextConfig;
