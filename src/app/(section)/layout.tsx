@@ -1,6 +1,10 @@
 // src/app/(section)/layout.tsx
 import type { ReactNode } from "react";
 
+// 🧩 Force this entire section (including /map) to render dynamically
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default function SectionLayout({ children }: { children: ReactNode }) {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
