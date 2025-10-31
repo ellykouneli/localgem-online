@@ -1,3 +1,6 @@
+"use client";
+export const dynamic = "force-dynamic";
+
 import PageHeader from "@/components/PageHeader";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -6,18 +9,10 @@ import MapClient from "./MapClient";
 export default function MapPage() {
   return (
     <Suspense fallback={<div>Loading map...</div>}>
-      <MapClientWrapper />
+      <MapClientWithParams />
     </Suspense>
   );
 }
-
-function MapClientWrapper() {
-  // Since MapClient is already a client component, we can safely use hooks here
-  return <MapClientWithParams />;
-}
-
-// 👇 Move your searchParams logic here, in a client sub-component
-("use client");
 
 function MapClientWithParams() {
   const searchParams = useSearchParams();
