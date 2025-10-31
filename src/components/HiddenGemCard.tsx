@@ -1,38 +1,30 @@
-import { MapPin, Star } from "lucide-react";
+import Link from "next/link";
 
-export type HiddenGem = {
-  id?: string | number;
-  name: string;
-  description: string;
-  district: string;
-  imageUrl: string;
-  rating?: number;
+type Props = {
+  href: string;
+  title: string;
+  subtitle?: string | null;
+  image?: string | null;
 };
 
-export default function HiddenGemCard({ gem }: { gem: HiddenGem }) {
+export default function HiddenGemCard({ href, title, subtitle, image }: Props) {
   return (
-    <div className="bg-gray-50 rounded-2xl overflow-hidden cursor-pointer hover:bg-gray-100 transition-colors shadow-card">
-      <img
-        src={gem.imageUrl}
-        alt={gem.name}
-        className="w-full h-36 object-cover"
-      />
-      <div className="p-3">
-        <h4 className="font-medium text-gray-900 text-sm mb-1">{gem.name}</h4>
-        <p className="text-xs text-gray-600 mb-2 line-clamp-2">{gem.description}</p>
-        <div className="flex items-center justify-between text-xs">
-          <span className="flex items-center text-gray-500">
-            <MapPin className="w-3 h-3 mr-1" />
-            <span>{gem.district}</span>
-          </span>
-          {typeof gem.rating !== "undefined" ? (
-            <span className="flex items-center text-yellow-500">
-              <Star className="w-3 h-3 mr-1" />
-              <span>{gem.rating}</span>
-            </span>
-          ) : <span />}
-        </div>
-      </div>
-    </div>
+    <Link
+      href={href}
+      className="group block rounded-2xl border p-4 shadow-sm hover:shadow-md transition"
+    >
+      {image ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={image}
+          alt={title}
+          className="mb-3 h-40 w-full object-cover rounded-xl"
+        />
+      ) : null}
+
+      <div className="text-lg font-semibold">{title}</div>
+
+      {subtitle ? <div className="text-sm opacity-70">{subtitle}</div> : null}
+    </Link>
   );
 }

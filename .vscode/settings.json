@@ -1,0 +1,47 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+
+  "eslint.useFlatConfig": false,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+
+  "search.exclude": {
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  "debug.javascript.autoAttachFilter": "smart",
+
+  // ✅ Custom words for Code Spell Checker
+  "cSpell.words": [
+    "supabase",
+    "localgem",
+    "localhost",
+    "turbopack",
+    "predev",
+    "devtools",
+    "Nextjs",
+    "tailwindcss",
+    "eslint",
+    "prettier",
+    "lucide",
+    "jsx",
+    "tsx"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}

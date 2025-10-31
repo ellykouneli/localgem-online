@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": [
+    "node_modules",
+    ".next",
+    "dist",
+    "build",
+    "package-lock.json",
+    "yarn.lock",
+    "pnpm-lock.yaml"
+  ],
+  "words": [
+    "supabase",
+    "localgem",
+    "localhost",
+    "turbopack",
+    "predev",
+    "devtools",
+    "Nextjs",
+    "tailwindcss",
+    "eslint",
+    "prettier",
+    "lucide",
+    "jsx",
+    "tsx"
+  ]
+}

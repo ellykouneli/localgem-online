@@ -1,3 +1,4 @@
+import typography from "@tailwindcss/typography"; // ✅ Import the plugin properly
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -10,10 +11,10 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          blue: "#4FA8FF",       // lighter blue
-          blueDark: "#2B6CB0",   // darker helper
-          emerald: "#5FE1B9",    // light emerald
-          emeraldDark: "#10B981" // darker helper
+          blue: "#49c7eeff", // lighter blue
+          blueDark: "#1d5592ff", // darker blue
+          emerald: "#5FE1B9", // light emerald
+          emeraldDark: "#10B981", // darker emerald
         },
       },
       boxShadow: {
@@ -25,7 +26,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    typography, // ✅ Enables beautiful prose (Markdown) styles
+  ],
 };
 
 export default config;

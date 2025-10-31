@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "kill-port-5050",
+      "type": "shell",
+      "command": "powershell -NoProfile -Command \"Get-NetTCPConnection -LocalPort 5050 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }\"",
+      "problemMatcher": []
+    }
+  ]
+}
