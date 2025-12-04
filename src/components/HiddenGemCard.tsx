@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 type Props = {
@@ -9,22 +12,37 @@ type Props = {
 
 export default function HiddenGemCard({ href, title, subtitle, image }: Props) {
   return (
-    <Link
-      href={href}
-      className="group block rounded-2xl border p-4 shadow-sm hover:shadow-md transition"
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="w-full"
     >
-      {image ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={image}
-          alt={title}
-          className="mb-3 h-40 w-full object-cover rounded-xl"
-        />
-      ) : null}
+      <Link
+        href={href}
+        className="group block rounded-xl overflow-hidden border border-brand-light/30 bg-white/80 backdrop-blur-sm
+                   shadow-card hover:shadow-glow transition-all duration-300"
+      >
+        {/* Image */}
+        {image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt={title}
+            className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        )}
 
-      <div className="text-lg font-semibold">{title}</div>
+        {/* Content */}
+        <div className="p-5">
+          <h3 className="text-lg sm:text-xl font-display font-semibold text-brand-dark mb-1 group-hover:text-brand-light transition-colors">
+            {title}
+          </h3>
 
-      {subtitle ? <div className="text-sm opacity-70">{subtitle}</div> : null}
-    </Link>
+          {subtitle && (
+            <p className="text-sm text-neutral-600 leading-snug">{subtitle}</p>
+          )}
+        </div>
+      </Link>
+    </motion.div>
   );
 }

@@ -1,7 +1,9 @@
+// src/app/layout.tsx
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
 
+import AskMeAnything from "@/components/AskMeAnything";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
@@ -14,19 +16,7 @@ export const metadata: Metadata = {
     template: "%s · LocalGem",
   },
   description:
-    "Discover authentic Athens: hidden gems, classics, transportation, tips, and an interactive map.",
-  openGraph: {
-    type: "website",
-    url: "https://www.localgem.online",
-    siteName: "LocalGem",
-    title: "LocalGem — Athens Travel Guide",
-    description:
-      "Discover authentic Athens: hidden gems, classics, transportation, tips, and an interactive map.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    creator: "@localgem",
-  },
+    "Discover authentic Athens: hidden gems, food, routes, and local life — curated for real travelers.",
 };
 
 export default function RootLayout({
@@ -36,10 +26,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className="font-sans antialiased text-gray-800 bg-[#f7f8f4]">
         <Navbar />
-        <main id="main">{children}</main>
+        <main id="main" className="min-h-screen">
+          {children}
+        </main>
         <Footer />
+        <AskMeAnything />
       </body>
     </html>
   );

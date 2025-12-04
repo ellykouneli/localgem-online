@@ -1,34 +1,34 @@
-import typography from "@tailwindcss/typography"; // ✅ Import the plugin properly
+// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
-const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          blue: "#49c7eeff", // lighter blue
-          blueDark: "#1d5592ff", // darker blue
-          emerald: "#5FE1B9", // light emerald
-          emeraldDark: "#10B981", // darker emerald
-        },
+        brand: "#7c3aed",
+        "brand-light": "#a78bfa",
+        "brand-dark": "#4c1d95",
+        olive: "#59684a",
       },
       boxShadow: {
-        card: "0 8px 30px -12px rgba(0,0,0,.18)",
+        header: "0 8px 20px rgba(0,0,0,0.06)",
+        card: "0 6px 16px rgba(0,0,0,0.08)",
+        glow: "0 0 0 4px rgba(124, 58, 237, 0.20)",
       },
-      borderRadius: {
-        xl: "1rem",
-        "2xl": "1.25rem",
+      fontFamily: {
+        display: ["Playfair Display", "serif"],
+        sans: [
+          "Poppins",
+          "ui-sans-serif",
+          "system-ui",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
       },
     },
   },
-  plugins: [
-    typography, // ✅ Enables beautiful prose (Markdown) styles
-  ],
-};
-
-export default config;
+  plugins: [], // ← must be an array; leave empty if you don't use plugins
+} satisfies Config;

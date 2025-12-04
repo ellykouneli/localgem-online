@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "@/components/Reveal";
 import Link from "next/link";
 
 const CONTENT: Record<
@@ -34,7 +35,7 @@ const CONTENT: Record<
     ],
   },
   "alternative-tours": {
-    title: "Alternative tours",
+    title: "Alternative Tours",
     intro: "Street art, hidden neighborhoods, and unusual angles on the city.",
     suggestions: [
       "Street art & stories circuit",
@@ -53,62 +54,63 @@ export default function ExperienceCategory({
 
   if (!data) {
     return (
-      <main className="container">
-        <h1>Not found</h1>
-        <p>This category doesn’t exist.</p>
-        <Link href="/experiences">← Back to Experiences</Link>
+      <main className="container mx-auto px-6 py-12">
+        <h1 className="text-2xl font-semibold text-primary mb-2">Not found</h1>
+        <p className="text-gray-600 mb-4">This category doesn’t exist.</p>
+        <Link
+          href="/experiences"
+          className="text-primary hover:text-secondary underline"
+        >
+          ← Back to Experiences
+        </Link>
       </main>
     );
   }
 
   return (
-    <main className="container">
-      <nav className="breadcrumbs">
-        <Link href="/">Home</Link> ›{" "}
-        <Link href="/experiences">Experiences</Link> › <span>{data.title}</span>
+    <main className="container mx-auto px-6 py-12">
+      {/* Breadcrumbs */}
+      <nav className="text-sm text-gray-500 mb-4">
+        <Link href="/" className="hover:text-primary">
+          Home
+        </Link>{" "}
+        ›{" "}
+        <Link href="/experiences" className="hover:text-primary">
+          Experiences
+        </Link>{" "}
+        › <span className="text-gray-700">{data.title}</span>
       </nav>
 
-      <h1>{data.title}</h1>
-      <p className="intro">{data.intro}</p>
+      {/* Title & intro */}
+      <Reveal>
+        <h1 className="text-3xl font-serif font-semibold text-primary mb-2">
+          {data.title}
+        </h1>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <p className="text-gray-700 mb-8 max-w-prose">{data.intro}</p>
+      </Reveal>
 
-      <ul className="list">
+      {/* Suggestions list */}
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
         {data.suggestions.map((s, i) => (
-          <li key={i}>{s}</li>
+          <Reveal key={i} delay={i * 0.1}>
+            <li className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition">
+              {s}
+            </li>
+          </Reveal>
         ))}
       </ul>
 
-      <Link href="/experiences">← Back to all categories</Link>
-
-      <style jsx>{`
-        .container {
-          max-width: 960px;
-          margin: 0 auto;
-          padding: 24px 16px 64px;
-        }
-        .breadcrumbs {
-          color: #666;
-          margin-bottom: 0.75rem;
-        }
-        h1 {
-          font-size: 1.75rem;
-          margin-bottom: 0.5rem;
-        }
-        .intro {
-          color: #555;
-          margin-bottom: 1rem;
-        }
-        .list {
-          list-style: none;
-          padding: 0;
-        }
-        .list li {
-          background: #fff;
-          border: 1px solid #eee;
-          border-radius: 12px;
-          padding: 10px;
-          margin-bottom: 8px;
-        }
-      `}</style>
+      {/* Back link */}
+      <Reveal delay={0.2}>
+        <Link
+          href="/experiences"
+          className="text-primary hover:text-secondary underline text-sm"
+        >
+          ← Back to all categories
+        </Link>
+      </Reveal>
     </main>
   );
 }

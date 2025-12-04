@@ -1,166 +1,181 @@
 @import "tailwindcss";
-/* keep your custom CSS below */
 
-/* Tailwind v4 already includes preflight + utilities automatically */
-/* keep the rest of your CSS below */
-
-/* ====================
-   Color & font tokens
-   ==================== */
+/* ==============================
+   Root Theme Variables — Light Mode
+   ============================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --focus-ring: #f59e0b; /* amber-500 */
+  /* 🌿 Elegant Greek palette */
+  --background: #f6f7f4; /* Aegean plaster tone */
+  --foreground: #1a1a1a; /* classic ink */
+  --muted: #6b7280; /* gray-500 */
+  --accent: #00a7a7; /* Caribbean turquoise */
+  --accent-hover: #008f8f;
+  --border: #e3e5e1; /* light neutral border */
+  --card-bg: #ffffffdd; /* translucent white for depth */
 }
 
-/* ====================
-   Dark mode
-   ==================== */
+/* ==============================
+   Dark Mode
+   ============================== */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0d0d0d;
+    --foreground: #f5f5f5;
+    --muted: #9ca3af;
+    --accent: #00b3b3;
+    --border: #1f2937;
+    --card-bg: #1a1a1a;
   }
 }
 
-/* ====================
-   Reduced motion
-   ==================== */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+/* ==============================
+   Base Styles
+   ============================== */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
 }
 
-/* ====================
-   Accessibility helpers
-   ==================== */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* ====================
-   Body defaults
-   ==================== */
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Poppins", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease;
+  min-height: 100vh;
 }
 
-/* ===========================
-   Color & font tokens
-   =========================== */
-:root {
-  --background: #ffffff;
-  --foreground: #171717; /* near-black */
-  --focus-ring: #f59e0b; /* amber-500 */
-}
-
-/* Next/Tailwind theme bindings */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* Dark scheme (accessible defaults) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --focus-ring: #fbbf24; /* brighter for dark */
-  }
-}
-
-/* Apply tokens */
-body {
-  background: var(--background);
+/* ==============================
+   Typography
+   ============================== */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Playfair Display", serif;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Clear, consistent keyboard focus */
-:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
+h1 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-/* ===========================
-   Reduced motion (surgical)
-   =========================== */
-@media (prefers-reduced-motion: reduce) {
-  :where(*, *::before, *::after) {
-    animation-duration: 0s !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0s !important;
-    scroll-behavior: auto !important;
-  }
+p {
+  font-size: 1rem;
+  color: var(--foreground);
 }
 
-/* ===========================
-   Extra a11y helpers
-   =========================== */
-
-/* High-contrast mode (Windows forced colors) */
-@media (forced-colors: active) {
-  :where(*) {
-    outline-color: CanvasText;
-  }
+.page-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
-/* Users requesting more contrast */
-@media (prefers-contrast: more) {
-  :where(a, button) {
-    text-decoration-thickness: from-font;
-  }
+.page-header h1 {
+  font-size: 2.25rem;
+  font-weight: 600;
 }
 
-/* Nicer selection with good contrast in both schemes */
+.page-header p {
+  color: var(--muted);
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* ==============================
+   Containers & Sections
+   ============================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* ==============================
+   Cards
+   ============================== */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* ==============================
+   Buttons
+   ============================== */
+button,
+.btn {
+  background-color: var(--accent);
+  color: #fff;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.6rem;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover,
+.btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* ==============================
+   Links
+   ============================== */
+a {
+  color: var(--accent);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* ==============================
+   Footer
+   ============================== */
+footer {
+  background-color: #f0f2f0;
+  border-top: 1px solid var(--border);
+  color: #555;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 1.5rem 0;
+}
+
+/* ==============================
+   Selection Highlight
+   ============================== */
 ::selection {
-  background: color-mix(in oklab, var(--focus-ring) 30%, transparent);
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: #fff;
 }
 
-/* ===========================
-   Utility: screen-reader only
-   =========================== */
-.sr-only {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-  /* === Home grid: 3 up / 3 below === */
-  .homeGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    justify-items: center;
-    margin-top: 16px;
-  }
-  @media (max-width: 900px) {
-    .homeGrid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 600px) {
-    .homeGrid {
-      grid-template-columns: 1fr;
-    }
-  }
+/* ==============================
+   Ensure Global Aegean Background Overrides Tailwind
+   ============================== */
+html,
+body,
+main {
+  background-color: var(--background) !important;
 }

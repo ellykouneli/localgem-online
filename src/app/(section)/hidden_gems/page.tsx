@@ -1,102 +1,101 @@
-// src/app/(section)/hidden_gems/page.tsx
-import { supabase } from "@/lib/supabase";
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Hidden Gems | LocalGem.online",
-  description: "Discover Athens' lesser-known treasures, curated by locals.",
-};
+import Reveal from "@/components/Reveal";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface HiddenGem {
   id: string;
   slug: string;
   name: string;
   description: string;
-  image_url?: string | null;
+  image_url: string | null;
 }
 
-export default async function HiddenGemsPage() {
-  const { data: gems, error } = await supabase
-    .from("hidden_gems")
-    .select("*")
-    .order("name", { ascending: true });
+export default function HiddenGemsPage() {
+  const supabase = createClientComponentClient();
+  const [gems, setGems] = useState<HiddenGem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  if (error) {
-    console.error("Supabase error:", error.message);
-    return (
-      <main className="p-6">
-        <p>Couldn’t load Hidden Gems.</p>
-        <pre className="mt-2 text-sm opacity-70">{error.message}</pre>
-      </main>
-    );
-  }
-
-  if (!gems || gems.length === 0) {
-    return (
-      <main className="p-6">
-        <p>No Hidden Gems found. Check your Supabase table or RLS settings.</p>
-      </main>
-    );
-  }
-
-  // Fallback image (in case Supabase image_url is missing)
-  const fallbackImage = "/fallback.jpg"; // 👈 place a fallback image in /public folder
+  useEffect(() => {
+    const fetchGems = async () => {
+      const { data, error } = await supabase.from("hidden_gems").select("*");
+      if (!error && data) setGems(data);
+      setLoading(false);
+    };
+    fetchGems();
+  }, [supabase]);
 
   return (
-    <main className="container mx-auto p-6">
-      <h1 className="text-3xl font-semibold mb-6 text-gray-800">Hidden Gems</h1>
+    <main className="container mx-auto px-6 py-16">
+      {/* === Header === */}
+      <Reveal>
+        <header className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-serif font-semibold text-emerald-700 mb-3">
+            Hidden Gems
+          </h1>
+          <p className="text-gray-700 max-w-2xl mx-auto text-balance">
+            Discover Athens’ lesser-known treasures, curated by locals.
+          </p>
+        </header>
+      </Reveal>
 
-      {/* ✅ Two-column layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* LEFT SIDE — Tips from Travelers */}
-        <aside className="lg:col-span-1">
-          <div className="bg-gray-50 rounded-xl shadow-sm p-4">
-            <h2 className="text-xl font-semibold mb-3 text-gray-800">
-              Tips from Travelers
-            </h2>
-            <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
-              <li>Go early in the morning for soft light and fewer crowds.</li>
-              <li>Bring water — some areas have limited shade.</li>
-              <li>Many hidden spots are close to metro stations.</li>
-              <li>Support local cafés and small shops nearby!</li>
-            </ul>
-          </div>
-        </aside>
-
-        {/* RIGHT SIDE — Hidden Gems grid */}
-        <section className="lg:col-span-3">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {gems.map((gem: HiddenGem) => (
-              <Link
-                key={gem.slug}
-                href={`/hidden_gems/${gem.slug}`}
-                className="group block rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition bg-white border border-gray-100"
-              >
-                <div className="relative w-full h-48">
+      {/* === Loading State === */}
+      {loading ? (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-gray-500"
+        >
+          Loading gems...
+        </motion.p>
+      ) : gems.length > 0 ? (
+        /* === Gems Grid === */
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {gems.map((gem, i) => (
+            <Reveal key={gem.id} delay={i * 0.1}>
+              <div className="group bg-white border border-emerald-100 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-transform duration-300 overflow-hidden">
+                {gem.image_url ? (
                   <Image
-                    src={gem.image_url || fallbackImage}
+                    src={gem.image_url}
                     alt={gem.name}
-                    fill
-                    unoptimized // 👈 temporary; remove after next.config.ts works
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    width={400}
+                    height={300}
+                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                </div>
-
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition">
+                ) : (
+                  <div className="w-full h-56 bg-emerald-50 flex items-center justify-center text-gray-400">
+                    No Image
+                  </div>
+                )}
+                <div className="p-5">
+                  <h3 className="font-semibold text-emerald-700 mb-1">
                     {gem.name}
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-3">
+                  <p className="text-gray-600 text-sm line-clamp-3">
                     {gem.description}
                   </p>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      </div>
+              </div>
+            </Reveal>
+          ))}
+        </motion.div>
+      ) : (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-gray-400 mt-10"
+        >
+          No hidden gems found. Add some in Supabase!
+        </motion.p>
+      )}
     </main>
   );
 }
